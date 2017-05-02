@@ -5,7 +5,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MGSwipeButton.h"
-
+#import <AsyncDisplayKit/AsyncDisplayKit.h>
 
 /** Transition types */
 typedef NS_ENUM(NSInteger, MGSwipeTransition) {
@@ -78,7 +78,7 @@ typedef NS_ENUM(NSInteger, MGSwipeEasingFunction) {
 @property (nonatomic, assign) MGSwipeTransition transition;
 /** Size proportional threshold to hide/keep the buttons when the user ends swiping. Default value 0.5 */
 @property (nonatomic, assign) CGFloat threshold;
-/** Optional offset to change the swipe buttons position. Relative to the cell border position. Default value: 0 
+/** Optional offset to change the swipe buttons position. Relative to the cell border position. Default value: 0
  ** For example it can be used to avoid cropped buttons when sectionIndexTitlesForTableView is used in the UITableView
  **/
 @property (nonatomic, assign) CGFloat offset;
@@ -109,7 +109,7 @@ typedef NS_ENUM(NSInteger, MGSwipeEasingFunction) {
 @property (nonatomic, assign) BOOL enableSwipeBounces;
 
 /** Coefficient applied to cell movement in bounce zone. Set to value between 0.0 and 1.0
-    to make the cell 'resist' swiping after buttons are revealed. Default is 1.0 */
+ to make the cell 'resist' swiping after buttons are revealed. Default is 1.0 */
 @property (nonatomic, assign) CGFloat swipeBounceRate;
 
 @end
@@ -133,7 +133,7 @@ typedef NS_ENUM(NSInteger, MGSwipeEasingFunction) {
 /** Animation settings when the expansion is triggered **/
 @property (nonatomic, strong, nonnull) MGSwipeAnimation * triggerAnimation;
 
-/** Property to read or change expansion animation durations. Default value 0.2 
+/** Property to read or change expansion animation durations. Default value 0.2
  * The target animation is the change of a button from normal state to expanded state
  */
 @property (nonatomic, assign) CGFloat animationDuration;
@@ -143,7 +143,7 @@ typedef NS_ENUM(NSInteger, MGSwipeEasingFunction) {
 /** helper forward declaration */
 @class MGSwipeTableCell;
 
-/** 
+/**
  * Optional delegate to configure swipe buttons or to receive triggered actions.
  * Buttons can be configured inline when the cell is created instead of using this delegate,
  * but using the delegate improves memory usage because buttons are only created in demand
@@ -181,7 +181,7 @@ typedef NS_ENUM(NSInteger, MGSwipeEasingFunction) {
  * @return Buttons array
  **/
 -(nullable NSArray<UIView*>*) swipeTableCell:(nonnull MGSwipeTableCell*) cell swipeButtonsForDirection:(MGSwipeDirection)direction
-             swipeSettings:(nonnull MGSwipeSettings*) swipeSettings expansionSettings:(nonnull MGSwipeExpansionSettings*) expansionSettings;
+                               swipeSettings:(nonnull MGSwipeSettings*) swipeSettings expansionSettings:(nonnull MGSwipeExpansionSettings*) expansionSettings;
 
 /**
  * Called when the user taps on a swiped cell
@@ -208,7 +208,7 @@ typedef NS_ENUM(NSInteger, MGSwipeEasingFunction) {
  * To implement swipe cells you have to override from this class
  * You can create the cells programmatically, using xibs or storyboards
  */
-@interface MGSwipeTableCell : UITableViewCell
+@interface MGSwipeTableCell : ASCellNode <UIGestureRecognizerDelegate>
 
 /** optional delegate (not retained) */
 @property (nonatomic, weak, nullable) id<MGSwipeTableCellDelegate> delegate;
@@ -216,7 +216,7 @@ typedef NS_ENUM(NSInteger, MGSwipeEasingFunction) {
 /** optional to use contentView alternative. Use this property instead of contentView to support animated views while swiping */
 @property (nonatomic, strong, readonly, nonnull) UIView * swipeContentView;
 
-/** 
+/**
  * Left and right swipe buttons and its settings.
  * Buttons can be any kind of UIView but it's recommended to use the convenience MGSwipeButton class
  */
@@ -252,6 +252,8 @@ typedef NS_ENUM(NSInteger, MGSwipeEasingFunction) {
 @property (nonatomic, strong, nullable) UIColor * swipeBackgroundColor;
 /** Property to read or change the current swipe offset programmatically */
 @property (nonatomic, assign) CGFloat swipeOffset;
+
+- (id _Nonnull ) init;
 
 /** Utility methods to show or hide swipe buttons programmatically */
 -(void) hideSwipeAnimated: (BOOL) animated;
