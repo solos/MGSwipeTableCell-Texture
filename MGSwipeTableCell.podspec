@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.source   = { :git => 'https://github.com/gertjanvg/MGSwipeTableCell-Texture.git' }
   s.source_files = 'MGSwipeTableCell'
   s.platform = :ios
-  s.ios.deployment_target = '5.0'
+  s.ios.deployment_target = '8.0'
   s.requires_arc = true
-  s.dependency 'Texture'
+  s.dependency 'Texture', '~> 2.3.1
 end
