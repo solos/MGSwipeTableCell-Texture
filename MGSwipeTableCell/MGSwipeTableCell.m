@@ -585,7 +585,10 @@ static inline CGFloat mgEaseInOutBounce(CGFloat t, CGFloat b, CGFloat c) {
 -(void) didLoad
 {
     [super didLoad];
-    [self didLoadViews];
+
+    _panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panHandler:)];
+    [self.view addGestureRecognizer:_panRecognizer];
+    _panRecognizer.delegate = self;
 }
 
 -(void) awakeFromNib
@@ -599,13 +602,6 @@ static inline CGFloat mgEaseInOutBounce(CGFloat t, CGFloat b, CGFloat c) {
 -(void) dealloc
 {
     [self hideSwipeOverlayIfNeeded];
-}
-
--(void) didLoadViews
-{
-    _panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panHandler:)];
-    [self.view addGestureRecognizer:_panRecognizer];
-    _panRecognizer.delegate = self;
 }
 
 -(void) initViews: (BOOL) cleanButtons

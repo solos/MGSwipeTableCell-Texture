@@ -1,3 +1,21 @@
+MGSwipeTableCellTexture
+================
+
+This is a port of MGSwipeCell to Texture. This makes it possible to use all of the features included in MGSwipeTableCell in your ASCellNodes! This requires very minimal changes from your usual ASCellNode usage. Note I have left the original readme intact, I will only detail the way to use this library. All credit for making MGSwipeTableCell goes to MortimerGoro. You can find the original project [here](https://github.com/MortimerGoro/MGSwipeTableCell). I can't make promises I will keep this project up to date, but considering I am using it in a project right now it's quite likely it will receive the necessary updates when needed. 
+
+Using MGSwipeTableCell instead of ASCellNode
+================
+The only real change you have to make is that you inherit from `MGSwipeTableCell`! There are, however, some caveats with using this library. Since the original was written for UIKit it was never intended to be used asynchronously. This means that this port still relies heavily on UIKit and as such is not fully asynchronous. There are some things that are thread-safe and some that are not.
+
+Initialization should be just fine on background threads. Setting the buttons should be fine, but doing things like `-(void) centerIconOverText` on the buttons is not fine since they access UIKit views. Really, it's just trial and error to see which can and what cannot be executed on a background thread. 
+
+How this was ported
+================
+Since I cannot guarantee support for this port here is the way this ported:
+- The `init` was stripped down such that it would not use UIKit anymore, and the UIKit features it needed was moved over to `-(void) layout` provided by Texture. 
+- All references to `self.contentView` were changed to `self.view`. 
+- `-(void) setEditing:(BOOL)editing animated:(BOOL)animated` was removed because ASCellNode does not support this feature.
+
 MGSwipeTableCell
 ================
 
