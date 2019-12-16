@@ -10,5 +10,5 @@ Pod::Spec.new do |s|
   s.platform = :ios
   s.ios.deployment_target = '8.0'
   s.requires_arc = true
-  s.dependency 'Texture', '~> 2.3.1'
+  s.dependency 'Texture'
 end
